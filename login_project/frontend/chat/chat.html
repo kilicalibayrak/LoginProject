@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Ekranı</title>
+    <link rel="stylesheet" href="/frontend/style/deneme.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h2 id="agentName"></h2>
+        <ivalabs class="maximize-mode" agent-id="" profile="test"></ivalabs>
+        <script>
+            const agent_id=localStorage.getItem("agent_id");
+            console.log(agent_id);
+            const name= localStorage.getItem("name");
+            console.log(name);
+            const h2name= document.getElementById("agentName");
+            if(name && h2name) {
+                h2name.innerText = name;
+            }
+
+            const ivalabsElement = document.querySelector("ivalabs");
+            if (ivalabsElement && agent_id) {
+                console.log(agent_id);
+                ivalabsElement.setAttribute("agent-id", agent_id);
+            }
+        </script>
+        <script src="https://agentcreatorsnippettest.global-bilgi.entp/index.js"></script>
+    </div>
+</body>
+</html>
+
+

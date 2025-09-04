@@ -1,0 +1,1260 @@
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap");
+
+.chat-container #agentName {
+    position: absolute;
+    top: 10px;        /* yukarıdan boşluk */
+    left: 50%;        /* yatay ortalama */
+    transform: translateX(-50%); /* tam ortaya getirme */
+    font-size: 22px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin: 0;
+    z-index: 1000; /* chat ekranının üstünde olsun */
+}
+
+:root {
+    --primary-color: #004B87 !important;      /* Ana mavi renk (Turkcell mavisi) */
+    --secondary-color: #0071BC !important;    /* İkincil mavi ton */
+    --accent-color: #FFCC00 !important;       /* Vurgu rengi (Turkcell sarısı) */
+    --text-color: #333333 !important;         /* Ana metin rengi */
+    --light-bg: #f9f9f9 !important;           /* Açık arkaplan rengi */
+    --white: #ffffff !important;              /* Saf beyaz */
+    --shadow: 0px 8px 25px rgba(0, 0, 0, 0.2) !important; /* Kutu gölgesi */
+    --border-radius: 16px !important;         /* Köşe yuvarlaklığı */
+}
+body {
+  display: flex;                  /* İçeriği ortalamak için flex */
+  justify-content: center;        /* Yatay ortalama */
+  align-items: center;            /* Dikey ortalama */
+  height: 100vh;                  /* Ekranın tamamı */
+  background: url("/frontend/images/background_gpt.png") no-repeat center center;
+  background-size: cover;         /* Arka plan resmi tam ekran */
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+body .ivalabs-container {
+  background-color: rgba(255, 255, 255, 0.97) !important; /* Hafif şeffaf beyaz kutu */
+  border-radius: 16px !important;             /* Modern yuvarlatılmış köşeler */
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2) !important; /* Hafif gölge */
+  animation: fadeIn 1s ease;      /* Açılışta hafif fade-in animasyonu */
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 150px;
+  right: 50px;
+  overflow: visible;
+  z-index: 500;
+  transition: none;
+
+
+  .expand-label {
+    cursor: pointer;
+    visibility: hidden;
+    user-select: none;
+  }
+
+  .expand-label:hover {
+    box-shadow: 1px 1px 5px rgb(6, 6, 6);
+  }
+
+  .expand-chat-change-mode-button {
+    cursor: pointer;
+    visibility: hidden;
+    user-select: none;
+
+    .expand-chat-change-mode-button-text {
+      font-family: "Dosis", sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .expand-chat-change-mode-button:hover {
+    width: 200px;
+
+    .expand-chat-change-mode-button-text {
+      display: block;
+    }
+  }
+
+  /* Sol taraftaki daire */
+  .circle {
+    width: 75px;
+    height: 75px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+  }
+
+  /* SaÄŸ taraftaki metin kutusu */
+  .text-container {
+    user-select: none;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    right: 5px;
+    height: 100%;
+    text-align: left;
+    font-family: "Dosis", sans-serif;
+  }
+
+  /* Ãœstteki metin */
+  .help-text {
+    user-select: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 8px;
+    display: inline-block;
+    /* GeniÅŸliÄŸi ayarlamak iÃ§in gerekli */
+    max-width: 100%;
+    /* Butonun maksimum geniÅŸliÄŸi */
+    white-space: nowrap;
+    /* YazÄ±yÄ± tek satÄ±rda tutar */
+    overflow: hidden;
+    /* TaÅŸan metni gizler */
+    text-overflow: ellipsis;
+    /* TaÅŸan metnin yerine "..." koyar */
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 5px;
+  }
+
+  /* Alttaki buton */
+  .start-call-button {
+    user-select: none;
+    background-color: black;
+    width: 120px;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Dosis", sans-serif;
+
+    font-weight: 400;
+
+    display: inline-block;
+    /* GeniÅŸliÄŸi ayarlamak iÃ§in gerekli */
+    max-width: 100%;
+    /* Butonun maksimum geniÅŸliÄŸi */
+    white-space: nowrap;
+    /* YazÄ±yÄ± tek satÄ±rda tutar */
+    overflow: hidden;
+    /* TaÅŸan metni gizler */
+    text-overflow: ellipsis;
+    /* TaÅŸan metnin yerine "..." koyar */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background-color: #ffffff !important;
+      color: black !important;
+    }
+  }
+
+  .mic-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 5px gray;
+    border: none;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: gray;
+    }
+  }
+
+  .mic-button-off {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(250, 207, 207);
+    box-shadow: 1px 1px 5px gray;
+    border: none;
+    transition: 0.2s all ease-in;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: rgb(255, 13, 13);
+    }
+
+    &:hover {
+      background-color: rgb(236, 236, 236);
+    }
+  }
+
+  .setting-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 5px gray;
+    border: none;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: gray;
+    }
+  }
+
+  #shaderCanvas {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* Ã‡ember ÅŸeklinde sÄ±nÄ±r */
+    overflow: hidden;
+    z-index: 100;
+    border: none;
+  }
+
+  .messages-header {
+    display: none;
+  }
+
+  .messages-container {
+    display: none;
+
+  }
+
+  .message-input-container {
+    display: none;
+  }
+}
+
+.compact {
+  width: 230px;
+  height: 50px;
+  overflow: visible;
+
+  .circle {
+    width: 42.5px;
+    height: 42.5px;
+  }
+
+  .text-container {
+    right: 5px;
+    width: 70%;
+
+    .buttons-container {
+      width: 98%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      /* column-gap: 5px; */
+    }
+  }
+
+  .start-call-button {
+    width: 145px;
+  }
+
+  .help-text {
+    display: none;
+  }
+
+  .expand-label {
+    visibility: hidden;
+  }
+}
+
+.expand {
+  width: 200px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+  overflow: visible;
+  bottom: 180px;
+  right: 80px;
+
+  .circle {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    top: 35px;
+    left: unset;
+  }
+
+  .text-container {
+    position: relative;
+    width: 90%;
+    height: unset;
+    align-items: center;
+    right: 0;
+    top: 0;
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      row-gap: 5px;
+    }
+  }
+
+  .expand-label {
+    transition: 0.1s ease-in;
+    z-index: 101;
+    visibility: visible;
+    position: absolute;
+    bottom: -65px;
+    right: -45px;
+    background-color: black;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+
+    .open-button-text {
+      display: none;
+      visibility: hidden;
+      font-family: "Dosis", sans-serif;
+    }
+  }
+
+  .expand-chat-change-mode-button {
+    transition: 0.1s ease-in;
+    visibility: visible;
+    position: absolute;
+    bottom: -65px;
+    right: -25px;
+    background-color: black;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 36px;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    font-size: 20px;
+    .expand-chat-change-mode-button-text {
+      font-size: 12px;
+      display: none;
+      margin-left: 5px;
+    }
+  }
+
+  .expand-chat-change-mode-button:hover {
+    width: 200px;
+
+    .expand-chat-change-mode-button-text {
+      display: block;
+    }
+  }
+}
+body .expand-chat {
+  width: 380px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+  overflow: visible;
+  bottom: 180px;
+  right: 80px;
+
+  .circle {
+    display: none;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    top: 20px;
+    left: unset;
+  }
+
+  .text-container {
+    display: none;
+    position: relative;
+    width: 90%;
+    height: unset;
+    align-items: center;
+    right: 0;
+    top: 0;
+  }
+
+  .start-call-button {
+    display: none;
+  }
+
+  .messages-header {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 45px !important;
+    position: absolute;
+    left:auto !important;
+    top: 0px;
+    background-color: rgba(36, 25, 255, 0.00001) !important;
+    border-top-left-radius: var(--border-radius) !important;
+    border-top-right-radius: var(--border-radius) !important;
+    font-family: "Dosis", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    
+    z-index: 1000 !important; /* üstte olsun */
+    color: var(--primary-color) !important; /* metnin görünmesi için */
+
+    .call-status-bar {
+      position: absolute;
+      top: calc(50% - 5px);
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: red;
+    }
+
+    .call-status-active {
+      background-color: rgb(39, 229, 39);
+      box-shadow: 1px 1px 10px rgba(0, 128, 0, 0.516);
+    }
+
+    .call-clear-button {
+      position: absolute;
+      top: calc(50% - 12px);
+      right: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s all ease;
+
+
+      &:hover {
+        /*background-color: indianred;*/
+
+        svg {
+          fill: indianred;
+        }
+      }
+    }
+
+    .chat-close-button {
+      display: none !important;
+      &:hover {
+        background-color: indianred;
+
+        svg {
+          fill: white;
+        }
+      }
+    }
+
+    .call-maximize-button{
+      display: none !important;
+
+      svg{
+        color:#aaa
+      }
+
+      &:hover {
+        /*background-color: indianred;*/
+
+        svg {
+          color:indianred
+
+        }
+      }
+    }
+
+    .call-input-button {
+      position: absolute;
+      top: calc(50% - 12px);
+      right: 50px;
+      width: 30;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+   .messages-container {
+
+    overflow:auto;
+    display: block;
+    margin-left: 5%;
+    width: 90%;
+    height: 75%;
+    position: absolute;
+    top: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .action {
+      margin-left: 2px;
+    }
+
+    .action-send-button {
+      background-color: transparent;
+      border: none;
+      color: #494949;
+      border-radius: 100px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(5px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .ivr:hover {
+      .action-send-button {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .action-send-button-retry {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+    }
+
+    .ivr {
+      margin-top: 5px;
+      width: 100%;
+      min-height: 40px;
+      display: inline !important;
+      flex-direction: column;
+      align-items: left;
+      justify-content: flex-start;
+
+      .message {
+        background: linear-gradient(135deg, #e6e6e6, #f5f5f5) !important;
+        border: 1px solid rgba(193, 208, 253, 0.1) !important;
+        color: rgb(0, 0, 0) !important;
+        max-width: 70vh !important;
+        display: inline-block !important;
+        border-radius: 18px 18px 18px 5px !important;                  
+        font-weight: 300;
+        font-family: "Inter", sans-serif;
+        font-size: 17px !important;
+        letter-spacing: 0.5px;
+        padding: 0 10px !important;
+
+        p {
+          margin: 7.5px 0 !important;
+        }
+      }
+    }
+
+    .user {
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 !important;
+
+      .message {
+        margin-right: 5px;
+        background-color: var(--accent-color) !important;
+        color: var(--white) !important;
+        border: 1px solid rgba(193, 208, 253, 0.1) !important;
+        box-shadow: 1px 1px 5px #d7d7d7;
+        max-width: 75%;
+        border-radius: 18px 18px 5px 18px !important; 
+        display: inline-block;
+        word-wrap: break-word; /* Uzun kelimeleri bir sonraki satÄ±ra taÅŸÄ± */
+        white-space: normal;
+        font-weight: 200;
+        letter-spacing: 0.5px;
+        font-family: "Inter", sans-serif;
+        font-size: 17px !important;
+        padding: 0 10px !important;
+
+        p {
+          margin: 7.5px 0 !important;
+        }
+      }
+    }
+  }
+/*    */
+ .message-input-container {
+   margin-left: 5% !important;
+   width: 1% !important;
+   display: flex !important;
+   flex-direction: row !important;
+   justify-content: space-between !important;
+   align-items: center !important;
+   padding: 15px 15px !important;
+   position: relative !important;
+   padding: 60% !important;
+   bottom: 15px !important;
+   border-radius: 16px !important;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0) !important;
+   background: var(--accent-color);
+
+     .message-input {
+    width: 80% !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 14px 25px !important;
+    font-size: 16px !important;
+    font-family: "Dosis", sans-serif !important;
+    background-color: hsl(0, 0%, 100%) !important;
+    color: #000000 !important;
+    transition: all 0.3s ease !important;
+    
+
+    &::placeholder {
+      color: #b0b0b0 !important; /* placeholder rengi yumuşatıldı */
+    }
+  }
+
+  .message-input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(97, 97, 97, 0.7) !important; /* focus durumunda gölge düzeltildi */
+    background-color: #fafafa !important; /* odaklanınca açık gri zemin */
+  }
+
+  .message-send-button {
+    width: 84px !important; /* buton boyutu büyütüldü */
+    height: 42px !important;
+    border-radius: 18px 18px 18px 18px !important;
+    background-color: var(--accent-color) !important;
+    border: 1px solid white;
+    color: rgb(230, 27, 27);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.2s ease !important; /* animasyon eklendi */
+
+    &:hover {
+      transform: scale(1.1) !important; /* hover’da büyüme efekti */
+      background-color: #1a1a1a !important; /* hover'da renk koyulaştı */
+    }
+
+    &:active {
+      transform: scale(0.95) !important; /* tıklamada küçülme efekti */
+    }
+  }
+}
+
+
+  .expand-label {
+    transition: 0.1s ease-in;
+    visibility: visible;
+    position: absolute;
+    bottom: -65px;
+    right: -45px;
+    background-color: var(--accent-color) !important;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: 101;
+
+    .open-button-text {
+      display: none;
+      visibility: hidden;
+      font-family: "Dosis", sans-serif;
+    }
+  }
+
+  .message-input-container .input-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    /* input arkası */
+    background-color: rgba(255, 255, 255, 0.9)!important;
+  }
+
+  .message-suggestions-container {
+    position: absolute;
+    bottom: 64px !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 5px;
+
+    overflow-x: auto;
+    gap: 5px;
+    padding: 1px !important;
+    background-color: var(--accent-color) !important;
+    scroll-behavior:var(--accent-color) 0 !important;
+    z-index: 10;
+
+    .suggestion-item {
+      flex: 0 0 auto;
+      background-color: #f1f1f1;
+      padding: 5px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: "Dosis", sans-serif;
+      font-size: 14px;
+      color: #444;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+
+  .expand-chat-change-mode-button {
+    transition: 0.1s ease-in;
+    visibility: visible;
+    position: absolute;
+    bottom: -65px;
+    right: -25px;
+    background-color: black;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 36px;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    font-size: 20px;
+
+    .expand-chat-change-mode-button-text {
+      font-size: 12px;
+      display: none;
+      margin-left: 5px;
+    }
+  }
+
+  .expand-chat-change-mode-button:hover {
+    width: 200px;
+
+    .expand-chat-change-mode-button-text {
+      display: block;
+    }
+  }
+}
+
+.expand-closed {
+  width: 0;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+  overflow: visible;
+
+  .modern-input-panel {
+    visibility: hidden;
+  }
+
+  .circle {
+    visibility: hidden;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    top: 20px;
+    left: unset;
+  }
+
+  .text-container {
+    visibility: hidden;
+    position: relative;
+    width: 100%;
+    height: unset;
+    align-items: center;
+    right: 0;
+    top: 0;
+  }
+
+  .messages-header {
+    display: none;
+  }
+
+  .message-input-container {
+    display: none;
+  }
+
+  .expand-label {
+    position: absolute;
+    background-color: black;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    width: 150px;
+
+    .open-button-text {
+      display: block;
+      visibility: visible;
+      font-family: "Dosis", sans-serif;
+      display: inline-block;
+      /* GeniÅŸliÄŸi ayarlamak iÃ§in gerekli */
+      max-width: 70%;
+      /* Butonun maksimum geniÅŸliÄŸi */
+      white-space: nowrap;
+      /* YazÄ±yÄ± tek satÄ±rda tutar */
+      overflow: hidden;
+      /* TaÅŸan metni gizler */
+      text-overflow: ellipsis;
+      /* TaÅŸan metnin yerine "..." koyar */
+    }
+  }
+
+  .expand-chat-change-mode-button {
+    transition: 0.1s ease-in;
+    visibility: visible;
+    position: absolute;
+    bottom: -65px;
+    right: 85px;
+    background-color: black;
+    padding: 5px;
+    border: 1px gray solid;
+    box-shadow: 1px 1px 5px gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 36px;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    font-size: 18px;
+
+    .expand-chat-change-mode-button-text {
+      font-size: 12px;
+      display: none;
+      margin-left: 5px;
+    }
+  }
+
+  .expand-chat-change-mode-button:hover {
+    width: 200px;
+
+    .expand-chat-change-mode-button-text {
+      display: block;
+    }
+  }
+}
+/* Scrool bar */
+
+::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background-color: #d5d5d5;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7e7e7e;
+  border-radius: 6px;
+}
+
+/* Scroll barÄ±n arka planÄ± */
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+
+
+/* KaydÄ±rma Ã§ubuÄŸu Ã¼zerine gelince */
+::-webkit-scrollbar-thumb:hover {
+  background: #515151;
+  border-radius: 5px;
+
+}
+
+/*input panel */
+.modern-input-panel {
+  position: absolute;
+  bottom: 0;
+  /* left: 5%; */
+  width: 80%;
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 20px 20px;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  z-index: 999;
+  padding: 0 12px 10px 12px;
+  font-family: "Dosis", serif;
+}
+
+.modern-input-panel.open {
+  max-height: 350px;
+}
+
+.modern-input-panel.close {
+  max-height: 0px;
+  padding: 0px;
+}
+
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+}
+
+.form-group input {
+  width: 90%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background: #fdfdfd;
+  color: rgb(69, 69, 69);
+  font-family: "Dosis", serif;
+}
+
+.form-group input:focus {
+  border-color: #5c6ac4;
+  box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.2);
+}
+
+.form-group label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: white;
+  padding: 0 6px;
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.input-panel-close-btn {
+  position: sticky;
+  float: right;
+  width: 20px;
+  height: 20px;
+  top: -105px;
+  right: -75px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  color: #f26565;
+  transition: color 0.3s;
+  box-shadow: 0px 0px 5px #3535356b;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.save-btn-modern {
+  background: linear-gradient(135deg, #5c6ac4, #667eea);
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.input-panel-header {
+  position: sticky;
+  top: 0;
+  background: #ffffffcc;
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  padding: 12px 0 8px 4px;
+  z-index: 9;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+.save-btn-modern:hover {
+  background: linear-gradient(135deg, #4e5ac0, #5866e3);
+  transform: scale(1.02);
+}
+
+/* Responsive file link styling - geniÅŸlik kontrolÃ¼ */
+.file-link {
+  display: inline-block;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #bbdefb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Dosis', sans-serif;
+  margin: 2px 4px 2px 0;
+
+  /* GeniÅŸlik kontrolÃ¼ */
+  max-width: 200px; /* Maksimum geniÅŸlik */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* Responsive */
+  box-sizing: border-box;
+}
+
+.file-link:hover {
+  background-color: #bbdefb;
+  border-color: #1976d2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+
+  /* Hover'da biraz geniÅŸleyebilir */
+  max-width: 220px;
+}
+
+.file-link:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(25, 118, 210, 0.3);
+}
+
+/* Mobil iÃ§in daha da kÃ¼Ã§Ã¼k */
+@media (max-width: 400px) {
+  .file-link {
+    max-width: 160px;
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .file-link:hover {
+    max-width: 180px;
+  }
+}
+
+/* Chat mesajlarÄ± iÃ§inde daha iyi fit etmesi iÃ§in */
+.messages-container .message .file-link {
+  max-width: calc(100% - 20px);
+  min-width: 100px;
+}
+
+/* Ã‡ok uzun dosya adlarÄ± iÃ§in word break */
+.file-link {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 10px;
+}
+.typing-dots span {
+  margin: 0 1px;
+  width: 10px;
+  height: 10px;
+  background: #888;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.4s infinite both;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+body .ivalabs-container.maximize-mode {
+  position: fixed !important;
+  width: 80vw !important;
+  height: 80vh !important;
+  top: 50% !important;
+  left: 50% !important;
+  bottom: 90px !important;
+  right: unset !important;
+  bottom: unset !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999 !important;
+  overflow: auto;
+  border-radius: 16px !important;
+}
+
+.ivalabs-container.maximize-mode .circle {
+  display: none;
+}
+.ivalabs-container.maximize-mode .message {
+  bottom: 90px !important;
+  font-size: 16px !important;
+}.ivalabs-container.maximize-mode .message-input {
+  font-size: 18px !important;
+}
+
+body .ivalabs-container.maximize-mode .message-input-container{
+  width:97% !important;
+  
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px !important;
+  position: absolute !important;
+  bottom: 0px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-left: 0 !important;
+  border-radius: 0 0 var(--border-radius) var(--border-radius) !important; 
+}
+
+
+
+.ivalabs-container.maximize-mode .text-container {
+  width: 100% !important;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.ivalabs-container.maximize-mode .messages-container {
+  margin-left: 0 !important;
+  padding: 10px 20px 0px 20px  !important;
+  margin: 10px 0 0 0;
+}
+
+.ivalabs-container.maximize-mode .message-input {
+  width: 100% !important;
+}
+
+.ivalabs-container.maximize-mode .messages-container,
+.ivalabs-container.maximize-mode .message-input-container {
+  display: block !important;
+}
+
+
+
+.ivalabs-container.maximize-mode .start-call-button {
+  width: auto;
+}
+
+.ivalabs-container.maximize-mode #scroll-to-bottom-btn {
+  padding: 7px 13px !important;
+  right: 5px !important;
+  }
+
+.ivalabs-container.maximize-mode .expand-label,
+.ivalabs-container.maximize-mode .expand-chat-change-mode-button {
+  display: none !important;
+}
+
+#scroll-to-bottom-btn {
+  display: none; /* JS ile aÃ§/kapa */
+  width: auto;
+  padding: 4px 10px;
+  background-color: #222222bf;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-family: 'Dosis', sans-serif;
+  align-self: flex-end; /* SaÄŸ alta yaslan */
+  margin-bottom: 5px; /* GÃ¶nderme kutusunun 5px Ã¼stÃ¼ */
+  z-index: 100;
+  position: absolute;
+  right: 25px;
+  bottom: 60px;
+}
+
+#scroll-to-bottom-btn .scroll-text {
+  display: none;
+}
+
+#scroll-to-bottom-btn:hover {
+  background-color: rgba(21, 21, 21, 0.75);
+
+  display: none;
+}
+
+.action-send-button-retry{
+  background-color: transparent;
+  border: none;
+  color: #494949;
+  border-radius: 100px;
+  cursor: pointer;
+  opacity: 1;
+  transform: translateY(5px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}

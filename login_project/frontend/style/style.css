@@ -1,0 +1,123 @@
+/* ================================
+   GLOBAL BILGI LOGIN STYLE SHEET
+   /frontend/style/style.css
+   ================================ */
+
+/* Genel ayarlar: sıfırlama ve font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Border + padding toplam genişlikten düşmesin */
+    font-family: "Helvetica Neue", Arial, sans-serif; /* Kurumsal, modern font */
+}
+
+/* Body ayarları: arka plan fotoğrafı ve ortalama */
+.login-body {
+    display: flex;                  /* İçeriği ortalamak için flex */
+    justify-content: center;        /* Yatay ortalama */
+    align-items: center;            /* Dikey ortalama */
+    height: 100vh;                  /* Ekranın tamamı */
+    background: url("/frontend/images/background_gpt.png") no-repeat center center;
+    background-size: cover;         /* Arka plan resmi tam ekran */
+}
+
+/* Login container: kart görünümü */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Hafif şeffaf beyaz kutu */
+    padding: 40px;
+    border-radius: 16px;             /* Modern yuvarlatılmış köşeler */
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+    width: 350px;
+    text-align: center;             /* Logo ve yazılar ortalansın */
+    animation: fadeIn 1s ease;      /* Açılışta hafif fade-in animasyonu */
+}
+
+/* Logo */
+.login-logo {
+    width: 160px;
+    margin-bottom: 20px;
+}
+
+/* Input alanları */
+.login-input {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 10px 0;
+    border: 2px solid #004B87;       /* Turkcell laciverti */
+    border-radius: 15px;
+    font-size: 15px;
+    transition: all 0.3s ease;       /* Hover ve focus animasyonu */
+}
+/* Kullanıcı adı ve Şifre kısmı */
+.login-input::placeholder {
+    font-size: medium;
+    color:#004a87;
+}
+
+/* Input hover efekti */
+.login-input:hover {
+    transform: scale(1.04);          /* Hafif büyüme */
+    border-color: #FFCC00;           /* Turkcell sarısı */
+    background-color: #f9f9f9;       /* Açık gri arka plan */
+}
+
+/* Input focus efekti */
+.login-input:focus {
+    outline: none;                   /* Varsayılan mavi çizgiyi kaldır */
+    border-color: #FFCC00;           /* Sarıya geçiş */
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.6); /* Sarı parıltı */
+    transform: scale(1.09);          /* Biraz daha büyüsün */
+}
+
+/* Giriş butonu */
+.login-btn {
+    width: 70%;
+    padding: 14px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #004B87, #0071BC); /* Mavi gradient */
+    color: #fff;
+    border: none;
+    border-radius: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.6s ease;
+}
+
+/* Buton hover efekti */
+.login-btn:hover {
+    background: linear-gradient(135deg, #FFCC00, #FFD633); /* Sarı gradient */
+    color: #004B87;                 /* Lacivert yazı */
+    transform: scale(1.05);         /* Büyüsün */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+/* Buton tıklama animasyonu */
+   .login-btn.shrink {
+    background: linear-gradient(135deg, #004B87, #0071BC);
+    width: 50px !important;          /* Küçük top */
+    height: 50px !important;
+    border-radius: 50% !important;   /* Yuvarlak */
+    padding: 0 !important;
+    font-size: 0;                    /* Yazıyı gizle */
+    transition: all 0.5s ease;       /* Yumuşak geçiş */
+}
+/* Hata mesajı */
+.error-message {
+    color: #D32F2F;                  /* Kırmızı */
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Başarılı giriş mesajı */
+.success-message {
+    color: #388E3C;                  /* Yeşil */
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Açılış animasyonu */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-300px); }
+    to { opacity: 1; transform: translateY(); }
+}

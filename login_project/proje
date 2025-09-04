@@ -1,0 +1,192 @@
+login_project
+├── backend
+│   ├── backend
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── settings.cpython-313.pyc
+│   │   │   ├── urls.cpython-313.pyc
+│   │   │   ├── view.cpython-313.pyc
+│   │   │   └── wsgi.cpython-313.pyc
+│   │   ├── asgi.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── db.sqlite3
+│   ├── login_api
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── admin.cpython-313.pyc
+│   │   │   ├── apps.cpython-313.pyc
+│   │   │   ├── messages.cpython-313.pyc
+│   │   │   ├── models.cpython-313.pyc
+│   │   │   ├── urls.cpython-313.pyc
+│   │   │   └── views.cpython-313.pyc
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── messages.py
+│   │   ├── migrations
+│   │   │   ├── __init__.py
+│   │   │   └── __pycache__
+│   │   │       └── __init__.cpython-313.pyc
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   └── manage.py
+├── frontend
+│   ├── chat
+│   │   └── chat.html
+│   ├── login
+│   │   ├── login.html
+│   │   └── login.js
+│   └── style
+│       └── style.css
+└── proje
+
+/* ======================== */
+/* GENEL STİLLER & AYARLAR */
+/* ======================== */
+
+/* Sayfanın ve body'nin tüm ekranı kaplamasını sağlar */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Yarı şeffaf arka plan katmanı */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: -1;
+}
+
+/* ======================== */
+/* LOGİN EKRANI TEMELİ     */
+/* ======================== */
+
+.login-body {
+    background-image: url('/frontend/images/background_gpt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #fff; /* Yazı rengini açık yapar */
+    
+    /* Flexbox ile login kutusunu hem dikey hem yatayda ortalar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ======================== */
+/* LOGİN KUTUSU VE FORMU   */
+/* ======================== */
+
+.login-container {
+    background: rgba(255, 255, 255, 0.7); /* Şeffaf arka plan */
+    /* backdrop-filter: blur(0.5px); /* Buzlu cam efekti */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Hafif beyaz kenarlık */
+    border-radius: 17px; /* Yumuşak köşeler */
+    
+    
+    /* Kutu boyutları */
+    width: 380px;
+    height: 390px;
+    padding: 30px;
+    box-sizing: border-box;
+
+    /* İçindeki elemanları alt alta sıralar ve ortalar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* ======================== */
+/* İÇ ELEMAN STİLLERİ      */
+/* ======================== */
+
+.login-logo {
+    width: 200px;
+    margin-bottom:25px;
+    /* filter: drop-shadow(0 0 500px rgb(197, 11, 11)); */
+}
+
+.login-input {
+    width: 91%;
+    padding: 15px;
+    margin: 9px 0;
+    border: rgba(159, 202, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+    background-color: rgba(116, 184, 252, 0.4);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+/* kullanıcı adı sifre kısmı*/
+.login-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+.login-input:hover {
+    transform: translateY(-1px) scale(1.1);
+}
+
+.login-input:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+.login-btn {
+    width: 50%;
+    padding: 15px;
+    background: linear-gradient(135deg, #00bfff, #0080ff);
+    color: white;
+    border: none;
+    border-radius: 155px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 23px;
+   /* box-shadow: 0 0 1px rgba(0, 191, 255, 1);*/
+}
+
+.login-btn:hover {
+    transform: translateY(-1px) scale(1.1);
+   /* box-shadow: 0 8px 25px rgba(0, 191, 255, 0.8); */
+    background: linear-gradient(135deg, #00aaff, #0055ff); 
+}
+
+.error-message, .success-message {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: none; /* Metin gölgesini kaldırır */
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.success-message {
+    color: #28a745;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
