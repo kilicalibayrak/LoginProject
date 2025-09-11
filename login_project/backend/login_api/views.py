@@ -35,10 +35,9 @@ def login(request):
             return JsonResponse({"error":"geçersiz JSON"},status=400)
         
         #Yollayacağımız API 
-        url="https://agentcreatortestapi.global-bilgi.entp/security/login"
+        url=""
 
         #Yollayacağımız json mesajı
-        #"username": "telliatestalim","password": "6h87&s6Y"
         payload={
             "scope": "openid",
             "grant_type": "password",
